@@ -14,7 +14,7 @@ import android.widget.Toast;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
-public class main extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     EditText user;
     EditText codeVal;
     Button check;
@@ -96,7 +96,7 @@ public class main extends AppCompatActivity {
                 if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                     Toast.makeText(getApplicationContext(), "登录成功！",
                             Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(main.this,MainPage.class);
+                    Intent intent = new Intent(MainActivity.this,MainPage.class);
                     startActivity(intent);
                     // 提交验证码成功,直接登录
                 } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
