@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:text="登录成功!"
+        android:text="@string/login_success"
         android:textSize="20sp"
         android:textColor="@color/Gold"
         android:gravity="center"
