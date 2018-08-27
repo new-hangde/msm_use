@@ -1,20 +1,24 @@
 package com.example.a91599.appname;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
 public class MainActivity extends AppCompatActivity {
+    PreferenceKit p = new PreferenceKit();
     EditText user;
     EditText codeVal;
     Button check;
@@ -29,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
         check =(Button) findViewById(R.id.check);
         codeVal =(EditText) findViewById(R.id.code);
         btn =(Button)findViewById(R.id.btn);
+        String configuration = p.getParam();
+        Log.v("configuration","configuration:"+configuration);
+        if (configuration.length() != 0) {
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
+        }
         SMSSDK.registerEventHandler(eh);
         check.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 } else{
                     SMSSDK.getVerificationCode(country, phone);
                     check.setClickable(false);
-                    Looper.prepare();
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -94,19 +103,18 @@ public class MainActivity extends AppCompatActivity {
                 int result = msg.arg2;
                 Object data = msg.obj;
                 if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                    Toast.makeText(getApplicationContext(), "登录成功！",
-                            Toast.LENGTH_SHORT).show();
+                    p.setParam();
                     Intent intent = new Intent(MainActivity.this,HomeActivity.class);
                     startActivity(intent);
                     // 提交验证码成功,直接登录
-                } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                    Toast.makeText(getApplicationContext(), "验证码已经发送",
-                            Toast.LENGTH_SHORT).show();
-                } else if (result == SMSSDK.RESULT_ERROR) {
+                }/* else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+                    //something to do
+                } */else if (result == SMSSDK.RESULT_ERROR) {
                     try {
                         Throwable throwable = (Throwable) data;
                         throwable.printStackTrace();
                     } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }else {
                     ((Throwable) data).printStackTrace();
@@ -115,6 +123,21 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    public class PreferenceKit{
+        private SharedPreferences sp;
+        public  String getParam(){
+            sp = getSharedPreferences("configuration", 0);
+            String configuration = sp.getString("configuration", "");
+            return configuration;
+        }
+        public  void setParam(){
+            sp = getSharedPreferences("configuration",0);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("configuration", "true");
+            editor.commit();
+        }
+    }
 
 
     EventHandler eh=new EventHandler(){
