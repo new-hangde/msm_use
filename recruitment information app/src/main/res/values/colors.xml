@@ -11,4 +11,11 @@
     <color name="GrassGreen">#7cfc00</color>
     <color name="Cyan">#00ffff</color>
     <color name="DarkBlue">#0000FF</color>
+    <color name="main_tab_item_text_select">#00ceaa</color>
+    <color name="main_tab_item_text_normal">#808288</color>
+
+    <color name="tab_item_background">#ffffffff</color>
+
+    <color name="main_title_text_select">#78ffffff</color>
+    <color name="main_title_text_normal">#ffffffff</color>
 </resources>

@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
      Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == -1) {
@@ -107,9 +106,9 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this,HomeActivity.class);
                     startActivity(intent);
                     // 提交验证码成功,直接登录
-                }/* else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                    //something to do
-                } */else if (result == SMSSDK.RESULT_ERROR) {
+                } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+
+                } else if (result == SMSSDK.RESULT_ERROR) {
                     try {
                         Throwable throwable = (Throwable) data;
                         throwable.printStackTrace();
@@ -124,18 +123,18 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    public class PreferenceKit{
+    private class PreferenceKit{
         private SharedPreferences sp;
-        public  String getParam(){
+        private   String getParam(){
             sp = getSharedPreferences("configuration", 0);
             String configuration = sp.getString("configuration", "");
             return configuration;
         }
-        public  void setParam(){
+        private void setParam(){
             sp = getSharedPreferences("configuration",0);
             SharedPreferences.Editor editor = sp.edit();
             editor.putString("configuration", "true");
-            editor.commit();
+            editor.apply();
         }
     }
 
