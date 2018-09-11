@@ -1,16 +1,21 @@
 package com.example.a91599.appname.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.a91599.appname.Activity.ShowActivity;
 import com.example.a91599.appname.Adapter.MyAdapter;
 import com.example.a91599.appname.Bean.ApiResult;
 import com.example.a91599.appname.Bean.NewsBean;
+import com.example.a91599.appname.DBHelper.DBDao;
 import com.example.a91599.appname.R;
 import com.example.a91599.appname.Service.ShowService;
 
@@ -34,6 +39,17 @@ public class TotalListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_total, null);
         listView =(ListView)rootView.findViewById(R.id.list_total);
         TotalListShow();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NewsBean newsBean = list.get(position);
+                DBDao dbDao =new DBDao(getContext());
+                dbDao.insert(newsBean);
+                Intent intent = new Intent(getContext(), ShowActivity.class);
+                intent.putExtra("link",newsBean.getLink());
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 
@@ -58,33 +74,18 @@ public class TotalListFragment extends Fragment {
                         listView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     }else {
-                        int count = adapter.getCount();
-                        if (count + 10 <= list.size()) {
-                            for (int i = count; i < count + 10; i++) {
-                                NewsBean bean = new NewsBean();
-                                bean.setTitle(list.get(i).getTitle());
-                                bean.setSummary(list.get(i).getSummary());
-                                bean.setCompany_image(list.get(i).getCompany_image());
-                                bean.setUpdatetime(list.get(i).getUpdate_time());
-                                bean.setFavourite_count(list.get(i).getFavourite_count());
-                                adapter.addItem(bean);
-                            }
-                            adapter.notifyDataSetChanged();
-                            listView.setSelection(START);
-                        } else {
-                            for (int i = count; i < list.size(); i++) {
+                            for (int i = 0; i < list.size(); i++) {
                                 NewsBean bean = new NewsBean();
                                 bean.setCompany_image(list.get(i).getCompany_image());
                                 bean.setSummary(list.get(i).getSummary());
                                 bean.setTitle(list.get(i).getTitle());
-                                bean.setUpdatetime(list.get(i).getUpdate_time());
+                                bean.setUpdatetime(list.get(i).getUpdatetime());
                                 bean.setFavourite_count(list.get(i).getFavourite_count());
                                 adapter.addItem(bean);
                             }
                             adapter.notifyDataSetChanged();
                             listView.setSelection(START);
                         }
-                    }
                 }
                 call.cancel();
             }
