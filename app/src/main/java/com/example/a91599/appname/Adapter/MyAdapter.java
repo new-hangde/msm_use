@@ -24,6 +24,7 @@ import java.util.List;
 public class MyAdapter extends BaseAdapter {
     Context context;
     List<NewsBean> list;
+
     public MyAdapter(Context context, List<NewsBean> list) {
         this.context =context;
         this.list = list;
