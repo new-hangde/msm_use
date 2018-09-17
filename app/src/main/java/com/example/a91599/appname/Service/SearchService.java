@@ -15,6 +15,8 @@ import retrofit2.http.Query;
 
 public interface SearchService {
     @GET("api/job/search")
-    Call<ApiResult<List<NewsBean>>> getResult(@Query("keyword") String keyword);
+    Call<ApiResult<List<NewsBean>>> getResult(
+            @Query("page") int page,
+            @Query("keyword") String keyword);
 
 }

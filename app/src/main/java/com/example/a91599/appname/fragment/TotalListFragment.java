@@ -1,7 +1,6 @@
 package com.example.a91599.appname.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.a91599.appname.Activity.ShowActivity;
 import com.example.a91599.appname.Adapter.MyAdapter;
@@ -37,6 +37,7 @@ public class TotalListFragment extends Fragment {
     private ListView listView;
     private RefreshLayout mRefreshLayout;
     private  int pageIndex =1;
+    final int pageSize =15;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_total, null);
@@ -55,6 +56,7 @@ public class TotalListFragment extends Fragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 pageIndex++;
+                Log.v("page",""+pageIndex);
                 totalListShow(pageIndex);
             }
         });
@@ -88,17 +90,27 @@ public class TotalListFragment extends Fragment {
                      List<NewsBean> list=response.body().getData();
                     Log.d("sxl", list != null ? list.toString() :"null");
                     if(list!=null){
+                        Log.v("Size",""+list.size());
                         if( page ==1){
                             adapter.clear();
                         }
                         for(int i=0;i<list.size();i++){
-                            Log.v("Size",""+list.size());
                             NewsBean newsBean = list.get(i);
                             adapter.addItem(newsBean);
                         }
+                        if (list.size()<pageSize){
+                            Toast.makeText(getContext(),"最后一页",Toast.LENGTH_SHORT).show();
+                            mRefreshLayout.setEnableLoadmore(false);
+                        }else if(list.size()==pageSize){
+                            mRefreshLayout.setEnableLoadmore(true);
+                        }
+                        listView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    }else{
+                        pageIndex--;
+                        Toast.makeText(getContext(),"没有了",Toast.LENGTH_SHORT).show();
+                        mRefreshLayout.setEnableLoadmore(false);
                     }
-                    listView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
                 }
                 mRefreshLayout.finishRefresh();
                 mRefreshLayout.finishLoadmore();

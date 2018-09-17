@@ -36,6 +36,20 @@
         android:background="@drawable/black_dash_line"/>
 
     <TextView
+        android:id="@+id/upload"
+        android:text="@string/upload_information"
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/normal_size"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/black_dash_line"/>
+
+    <TextView
         android:id="@+id/setting"
         android:textSize="@dimen/normal_size"
         android:layout_marginTop="10dp"
