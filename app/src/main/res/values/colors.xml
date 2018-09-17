@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="Purple">#800080</color>
+    <color name="Pink">#ffc0cb</color>
+    <color name="OrangeRed">#FF4500</color>
+    <color name="Gold">#FFD700</color>
+    <color name="Yellow">#FFff00</color>
+    <color name="GrassGreen">#7cfc00</color>
+    <color name="Cyan">#00ffff</color>
+    <color name="DarkBlue">#0000FF</color>
+    <color name="main_tab_item_text_select">#00ceaa</color>
+    <color name="main_tab_item_text_normal">#808288</color>
+    <color name="transparent">#00000000</color>
+    <color name="tab_item_background">#ffffffff</color>
+
+    <color name="main_title_text_select">#78ffffff</color>
+    <color name="main_title_text_normal">#ffffffff</color>
+</resources>

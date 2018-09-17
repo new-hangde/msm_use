@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">苏科招聘信息</string>
+    <string name="hint_phone_text">请输入账号！</string>
+    <string name="hint_code_text">请输入验证码！</string>
+    <string name="get_code">获取验证码</string>
+    <string name="login">验证并登录</string>
+    <string name="login_success">登录成功!</string>
+    <string name="main">首页</string>
+    <string name="person">我的</string>
+    <string name="title_search">标题搜索</string>
+    <string name="cancel">取消</string>
+    <string name="submit">提交</string>
+    <string name="recommend">推荐</string>
+    <string name="total">全部</string>
+    <string name="search">搜索</string>
+    <string name="title">标题</string>
+    <string name="summary">摘要</string>
+    <string name="company_image">公司图标</string>
+    <string name="add">添加</string>
+    <string name="link">链接</string>
+    <string name="history">历史记录</string>
+    <string name="setting">个人设置</string>
+    <string name="follow">我的关注</string>
+    <string name="clear">清空</string>
+    <string name="upload_information">上传招聘信息</string>
+    <string name="upload">上传</string>
+
+
+</resources>
