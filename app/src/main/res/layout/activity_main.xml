@@ -41,7 +41,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:id="@+id/btn"
-        android:text="@string/login"
+        android:text="@string/checkAndLogin"
         android:textColor="#FFFFFF"
         android:background="@drawable/corner_btn"
         android:layout_marginTop="40dp"
@@ -49,4 +49,33 @@
         android:textSize="16sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_register"
+            android:textColor="@color/blue_btn_bg_color"
+            android:gravity="right"
+            android:layout_marginRight="10dp"
+            android:text="@string/register"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_pass_login"
+            android:textColor="@color/blue_btn_bg_color"
+            android:layout_marginLeft="10dp"
+            android:gravity="left"
+            android:layout_weight="1"
+            android:text="@string/pass_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
 </LinearLayout>

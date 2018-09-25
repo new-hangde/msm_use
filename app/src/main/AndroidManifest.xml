@@ -34,9 +34,16 @@
         <activity
             android:name=".Activity.HomeActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".Activity.ShowActivity" />
-        <activity android:name=".Activity.HistoryActivity" />
-        <activity android:name=".Activity.AddActivity"></activity>
+        <activity android:name=".Activity.ShowActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:name=".Activity.HistoryActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:name=".Activity.AddActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:name=".Activity.RegisterActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:name=".Activity.PasswordLoginActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
     </application>
 
 </manifest>
