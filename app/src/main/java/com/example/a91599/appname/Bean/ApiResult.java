@@ -19,7 +19,7 @@ import java.util.List;
     }
 
     public String getMsg() {
-        return msg;
+        return msg != null ? msg : "";
     }
 
     public void setMsg(String  msg) {
@@ -27,7 +27,6 @@ import java.util.List;
     }
 
     public String getTime() {
-
         return time;
     }
 
@@ -41,6 +40,10 @@ import java.util.List;
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public boolean isSuccessful(){
+        return code == 1;
     }
 
     @Override

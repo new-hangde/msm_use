@@ -17,7 +17,8 @@ import com.example.a91599.appname.Bean.ApiResult;
 import com.example.a91599.appname.Bean.NewsBean;
 import com.example.a91599.appname.DBHelper.DBDao;
 import com.example.a91599.appname.R;
-import com.example.a91599.appname.Service.ShowService;
+import com.example.a91599.appname.Service.RetrofitBuild;
+import com.example.a91599.appname.Service.RetrofitService;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -28,8 +29,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class TotalListFragment extends Fragment {
@@ -77,16 +76,13 @@ public class TotalListFragment extends Fragment {
     }
 
     public void totalListShow(final int page){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://job.zhuyefeng.com/")  //要访问的主机地址，注意以 /（斜线） 结束，不然可能会抛出异常
-                .addConverterFactory(GsonConverterFactory.create()) //添加Gson
-                .build();
-        ShowService service = retrofit.create(ShowService.class);
+        RetrofitBuild retrofitBuild = new RetrofitBuild();
+        RetrofitService service = retrofitBuild.service();
         Call<ApiResult<List<NewsBean>>> call = service.getNews(page);
         call.enqueue(new Callback<ApiResult<List<NewsBean>>>() {
             @Override
             public void onResponse(Call<ApiResult<List<NewsBean>>> call, Response<ApiResult<List<NewsBean>>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful() && response.body().isSuccessful()){
                      List<NewsBean> list=response.body().getData();
                     Log.d("sxl", list != null ? list.toString() :"null");
                     if(list!=null){

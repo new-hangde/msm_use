@@ -25,12 +25,10 @@ import android.widget.Toast;
 
 import com.example.a91599.appname.Bean.ApiResult;
 import com.example.a91599.appname.R;
-import com.example.a91599.appname.Service.RetrofitUtils;
-import com.example.a91599.appname.Service.UploadService;
-import com.google.gson.Gson;
+import com.example.a91599.appname.Service.RetrofitBuild;
+import com.example.a91599.appname.Service.RetrofitService;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,10 +36,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Callback;
-import retrofit2.HttpException;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AddActivity extends AppCompatActivity {
     private EditText ed_image;
@@ -189,17 +184,13 @@ public class AddActivity extends AppCompatActivity {
         File file = new File(path);
         RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part imageBodyPart = MultipartBody.Part.createFormData("image", file.getName(), imageBody);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://job.zhuyefeng.com/")  //要访问的主机地址，注意以 /（斜线） 结束，不然可能会抛出异常
-                .addConverterFactory(GsonConverterFactory.create()) //添加Gson
-                .client(RetrofitUtils.getInstance().addTimeOut(30).addHttpLog().build())
-                .build();
-        UploadService uploadService = retrofit.create(UploadService.class);
-        retrofit2.Call<ApiResult> call =  uploadService.upload(map,imageBodyPart);
+        RetrofitBuild retrofitBuild = new RetrofitBuild();
+        RetrofitService service = retrofitBuild.service();
+        retrofit2.Call<ApiResult> call =  service.upload(map,imageBodyPart);
         call.enqueue(new Callback<ApiResult>() {
             @Override
             public void onResponse(retrofit2.Call<ApiResult> call, Response<ApiResult> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful() && response.body().isSuccessful()){
                     Log.v("msg",response.toString());
                     ApiResult apiResult= (ApiResult) response.body();
                     if (apiResult==null){
