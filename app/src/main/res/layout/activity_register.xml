@@ -23,6 +23,7 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content" />
         <EditText
+            android:maxLines="1"
             android:layout_marginLeft="10dp"
             android:id="@+id/ed_phone_num"
             android:background="@drawable/corner_edit_view"
@@ -43,6 +44,7 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content" />
         <EditText
+            android:maxLines="1"
             android:layout_marginLeft="10dp"
             android:id="@+id/ed_pass"
             android:background="@drawable/corner_edit_view"
@@ -63,6 +65,7 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content" />
         <EditText
+            android:maxLines="1"
             android:layout_marginLeft="10dp"
             android:id="@+id/ed_pass_again"
             android:background="@drawable/corner_edit_view"

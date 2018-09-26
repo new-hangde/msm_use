@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
         <EditText
+            android:maxLines="1"
             android:id="@+id/user"
             android:background="@drawable/corner_edit_view"
             android:layout_width="match_parent"
@@ -21,6 +22,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <EditText
+                android:maxLines="1"
                 android:layout_gravity="center"
                 android:background="@drawable/corner_edit_view"
                 android:id="@+id/code"

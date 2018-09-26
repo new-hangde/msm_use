@@ -37,7 +37,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
     private void changeFragment(int resId) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();//开启一个Fragment事务
-
         hideFragments(transaction);//隐藏所有fragment
         if(resId==R.id.tv_main){//主页
             if(mainFragment==null){//如果为空先添加进来.不为空直接显示
@@ -56,7 +55,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
         transaction.commit();//一定要记得提交事务
     }
-
     private void changeSelect(int resId) {
         tvMain.setSelected(false);
         tvPerson.setSelected(false);
@@ -71,15 +69,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
     private void hideFragments(FragmentTransaction transaction){
         if (mainFragment != null)//不为空才隐藏,如果不判断第一次会有空指针异常
             transaction.hide(mainFragment);
         if (personFragment != null)
             transaction.hide(personFragment);
     }
-
-
-
-
 }

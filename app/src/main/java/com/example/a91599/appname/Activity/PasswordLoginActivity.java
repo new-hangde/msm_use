@@ -1,11 +1,16 @@
 package com.example.a91599.appname.Activity;
 
+import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,6 +18,7 @@ import android.widget.Toast;
 import com.example.a91599.appname.Bean.ApiResult;
 import com.example.a91599.appname.Bean.User;
 import com.example.a91599.appname.R;
+import com.example.a91599.appname.Service.ActivityUtils;
 import com.example.a91599.appname.Service.PreferenceService;
 import com.example.a91599.appname.Service.RetrofitBuild;
 import com.example.a91599.appname.Service.RetrofitService;
@@ -42,7 +48,7 @@ public class PasswordLoginActivity extends AppCompatActivity {
     }
     public void login(){
         final String phone_number = ed_phone_number.getText().toString();
-        String password = ed_password.getText().toString();
+        final String password = ed_password.getText().toString();
         if (TextUtils.isEmpty(phone_number)){
             Toast.makeText(getApplicationContext(), "手机号码不能为空",
                     Toast.LENGTH_SHORT).show();
@@ -59,8 +65,13 @@ public class PasswordLoginActivity extends AppCompatActivity {
                 if(response.isSuccessful() && response.body().isSuccessful()){
                     PreferenceService.putString("configuration","configuration","login");
                     PreferenceService.putString("phone","phone",ed_phone_number.getText().toString());
+                    InputMethodManager imm =(InputMethodManager)getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(ed_password.getWindowToken(), 0);
                     Intent intent = new Intent(PasswordLoginActivity.this,HomeActivity.class);
-                    startActivity(intent);
+                    ComponentName cn = intent.getComponent();
+                    Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
+                    startActivity(mainIntent);
                 }else {
                     Toast.makeText(getApplicationContext(), response.body().getMsg(),
                             Toast.LENGTH_SHORT).show();
