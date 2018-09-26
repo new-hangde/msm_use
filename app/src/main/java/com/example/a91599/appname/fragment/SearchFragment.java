@@ -19,11 +19,11 @@ import com.example.a91599.appname.Bean.ApiResult;
 import com.example.a91599.appname.Bean.NewsBean;
 import com.example.a91599.appname.DBHelper.DBDao;
 import com.example.a91599.appname.R;
-import com.example.a91599.appname.Service.SearchService;
+import com.example.a91599.appname.Service.RetrofitBuild;
+import com.example.a91599.appname.Service.RetrofitService;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +31,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class SearchFragment extends Fragment implements View.OnClickListener {
@@ -84,11 +82,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     }
 
     private void searchListShow(final int page,String title){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://job.zhuyefeng.com/")  //要访问的主机地址，注意以 /（斜线） 结束，不然可能会抛出异常
-                .addConverterFactory(GsonConverterFactory.create()) //添加Gson
-                .build();
-        SearchService service = retrofit.create(SearchService.class);
+        RetrofitBuild retrofitBuild = new RetrofitBuild();
+        RetrofitService service = retrofitBuild.service();
         Call<ApiResult<List<NewsBean>>> call = service.getResult(page,title);
         call.enqueue(new Callback<ApiResult<List<NewsBean>>>() {
             @Override

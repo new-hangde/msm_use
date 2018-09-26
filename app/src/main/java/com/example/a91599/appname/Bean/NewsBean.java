@@ -1,10 +1,6 @@
 package com.example.a91599.appname.Bean;
 
 
-import android.widget.CheckBox;
-
-import java.util.Calendar;
-
 public  class NewsBean {
     private int id;
     private String company_image;

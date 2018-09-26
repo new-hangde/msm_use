@@ -19,7 +19,7 @@ import java.util.List;
 public class MainFragment extends Fragment{
     private ViewPager vPager;
     private ImageView ivShapeCircle;
-    private TextView tvTotal,tvRecommend,tvSearch;
+    private TextView tvTotal,tvSearch;
     private List<Fragment> list = new ArrayList<>();
     private int offset = 0;
     private int currentIndex=0;
@@ -29,10 +29,8 @@ public class MainFragment extends Fragment{
         View rootView = inflater.inflate(R.layout.fragment_main, null);
         vPager = (ViewPager) rootView.findViewById(R.id.viewpager_home);
         TotalListFragment totalListFragment = new TotalListFragment();
-        RecommendListFragment recommendListFragment = new RecommendListFragment();
         SearchFragment searchFragment = new SearchFragment();
         list.add(totalListFragment);
-        list.add(recommendListFragment);
         list.add(searchFragment);
         MessageGroupFragmentAdapter adapter = new MessageGroupFragmentAdapter(getActivity().getSupportFragmentManager(), list);
         vPager.setAdapter(adapter);
@@ -42,11 +40,9 @@ public class MainFragment extends Fragment{
         vPager.setOnPageChangeListener(pageChangeListener);
         ivShapeCircle = (ImageView) rootView.findViewById(R.id.iv_shape_circle);
         tvTotal=(TextView) rootView.findViewById(R.id.tv_total);
-        tvRecommend=(TextView) rootView.findViewById(R.id.tv_recommend);
         tvTotal.setSelected(true);//推荐默认选中
         tvSearch=(TextView) rootView.findViewById(R.id.tv_search);
         tvTotal.setOnClickListener(clickListener);
-        tvRecommend.setOnClickListener(clickListener);
         tvSearch.setOnClickListener(clickListener);
 
 
@@ -61,11 +57,8 @@ public class MainFragment extends Fragment{
                 case R.id.tv_total:
                     vPager.setCurrentItem(0);
                     break;
-                case R.id.tv_recommend:
-                    vPager.setCurrentItem(1);
-                    break;
                 case R.id.tv_search:
-                    vPager.setCurrentItem(2);
+                    vPager.setCurrentItem(1);
                     break;
             }
         }
@@ -98,25 +91,21 @@ public class MainFragment extends Fragment{
         //(width / 5) * 2  这里表示标题栏两个控件的宽度
         //(width / 10)  标题栏一个控件的2分之一
         //7  约等于原点宽度的一半
-        matrix.postTranslate((width / 6)-7,0);//图片平移
+        matrix.postTranslate((width / 4)-7,0);//图片平移
         ivShapeCircle.setImageMatrix(matrix);
 
         //一个控件的宽度  我的手机宽度是1080/5=216 不同的手机宽度会不一样哦
-        offset=(width / 3);
+        offset=(width / 2);
     }
 
     private void changeTextColor(int index){
         tvTotal.setSelected(false);
-        tvRecommend.setSelected(false);
         tvSearch.setSelected(false);
         switch (index) {
             case 0:
                 tvTotal.setSelected(true);
                 break;
             case 1:
-                tvRecommend.setSelected(true);
-                break;
-            case 2:
                 tvSearch.setSelected(true);
                 break;
         }
@@ -129,24 +118,14 @@ public class MainFragment extends Fragment{
                 case 0:
                     if (currentIndex == 1) {//从推荐移动到关注   X坐标向左移动216
                         animation = new TranslateAnimation(offset,0 , 0, 0);
-                    } else if (currentIndex == 2) {//从同城移动到关注   X坐标向左移动216*2  记住起始x坐标是同城那里
-                        animation = new TranslateAnimation(offset*2, 0, 0, 0);
                     }
                     break;
                 case 1:
                     if (currentIndex == 0) {//从关注移动到推荐   X坐标向右移动216
                         animation = new TranslateAnimation(0, offset, 0, 0);
-                    } else if (currentIndex == 2) {//从同城移动到推荐   X坐标向左移动216
-                        animation = new TranslateAnimation(offset*2, offset, 0, 0);
                     }
                     break;
-                case 2:
-                    if (currentIndex == 0) {//从关注移动到同城   X坐标向右移动216*2  记住起始x坐标是关注那里
-                        animation = new TranslateAnimation(0, offset*2, 0, 0);
-                    } else if (currentIndex == 1) {//从推荐移动到同城   X坐标向右移动216
-                        animation = new TranslateAnimation(offset, offset*2, 0, 0);
-                    }
-                    break;
+
             }
             if (animation != null) {
                 animation.setFillAfter(true);

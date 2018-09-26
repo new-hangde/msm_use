@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingLeft="30dp"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
+        android:paddingLeft="30dp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="60dp"
         android:drawablePadding="30dp"
         android:gravity="center_vertical"
         android:id="@+id/person_tv"
-        android:drawableLeft="@drawable/head_appear"
+        android:drawableLeft="@drawable/user"
         android:layout_width="match_parent"
         android:layout_height="100dp" />
 
@@ -22,6 +22,7 @@
 
 
     <TextView
+        android:paddingLeft="30dp"
         android:id="@+id/history"
         android:text="@string/history"
         android:layout_marginTop="10dp"
@@ -36,6 +37,7 @@
         android:background="@drawable/black_dash_line"/>
 
     <TextView
+        android:paddingLeft="30dp"
         android:id="@+id/upload"
         android:text="@string/upload_information"
         android:layout_marginTop="10dp"
@@ -50,6 +52,7 @@
         android:background="@drawable/black_dash_line"/>
 
     <TextView
+        android:paddingLeft="30dp"
         android:id="@+id/setting"
         android:textSize="@dimen/normal_size"
         android:layout_marginTop="10dp"
@@ -64,6 +67,7 @@
         android:background="@drawable/black_dash_line"/>
 
     <TextView
+        android:paddingLeft="30dp"
         android:id="@+id/follow"
         android:text="@string/follow"
         android:layout_marginTop="10dp"
@@ -76,4 +80,17 @@
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="@drawable/black_dash_line"/>
+
+    <Button
+        android:textColor="#ffffff"
+        android:background="@color/blue_btn_bg_color"
+        android:id="@+id/login_condition"
+        android:text="@string/exit"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="@dimen/normal_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
 </LinearLayout>

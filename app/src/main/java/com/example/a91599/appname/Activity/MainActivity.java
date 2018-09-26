@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         tv_pass_login.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         String configuration=PreferenceService.getString("configuration","configuration","");
         Log.v("configuration","configuration:"+configuration);
-        if (configuration.length() != 0) {
+        if (configuration.equals("login")) {
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
@@ -68,23 +68,6 @@ public class MainActivity extends AppCompatActivity {
                     } else{
                         SMSSDK.getVerificationCode(country, phone);
                         check.setClickable(false);
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                for (; i >0; i--) {
-                                    handler.sendEmptyMessage(-1);
-                                    if (i <= 0) {
-                                        break;
-                                    }
-                                    try {
-                                        Thread.sleep(1000);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                handler.sendEmptyMessage(-2);//倒计时结束执行
-                            }
-                        }).start();
                     }
                     break;
 
@@ -134,7 +117,23 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     // 提交验证码成功,直接登录
                 } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (; i >0; i--) {
+                                handler.sendEmptyMessage(-1);
+                                if (i <= 0) {
+                                    break;
+                                }
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            handler.sendEmptyMessage(-2);//倒计时结束执行
+                        }
+                    }).start();
                 } else if (result == SMSSDK.RESULT_ERROR) {
                     try {
                         Throwable throwable = (Throwable) data;
@@ -150,9 +149,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
-
-
-    EventHandler eh=new EventHandler(){
+     EventHandler eh=new EventHandler(){
         @Override
         public void afterEvent(int event, int result, Object data) {
             Message msg = new Message();

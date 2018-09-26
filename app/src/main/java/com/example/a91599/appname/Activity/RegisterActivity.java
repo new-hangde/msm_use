@@ -1,10 +1,9 @@
 package com.example.a91599.appname.Activity;
 
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.telecom.Call;
-import android.telephony.TelephonyManager;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,19 +12,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.a91599.appname.Bean.ApiResult;
-import com.example.a91599.appname.Bean.User;
 import com.example.a91599.appname.R;
-import com.example.a91599.appname.Service.RegisterService;
-import com.example.a91599.appname.Service.RetrofitUtils;
+import com.example.a91599.appname.Service.PreferenceService;
+import com.example.a91599.appname.Service.RetrofitBuild;
+import com.example.a91599.appname.Service.RetrofitService;
 
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText ed_phone_num,ed_pass,ed_pass_again;
-    private Button btn_register;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
         ed_pass =(EditText)findViewById(R.id.ed_pass);
         ed_pass_again = (EditText)findViewById(R.id.ed_pass_again);
         ed_phone_num = (EditText)findViewById(R.id.ed_phone_num);
-         btn_register= (Button) findViewById(R.id.btn_register);
+        Button btn_register = (Button) findViewById(R.id.btn_register);
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void register(){
-        String phone_number =ed_phone_num.getText().toString();
+        final String phone_number =ed_phone_num.getText().toString();
         String password = null;
         boolean flag;
         if (ed_pass.getText().toString().equals(ed_pass_again.getText().toString())){
@@ -68,28 +65,29 @@ public class RegisterActivity extends AppCompatActivity {
         }
         Log.v("flag",flag+"");
         if (flag){
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://job.zhuyefeng.com/")  //要访问的主机地址，注意以 /（斜线） 结束，不然可能会抛出异常
-                    .addConverterFactory(GsonConverterFactory.create()) //添加Gson
-                    .client(RetrofitUtils.getInstance().addTimeOut(30).addHttpLog().build())
-                    .build();
-            RegisterService registerService = retrofit.create(RegisterService.class);
-            retrofit2.Call<ApiResult> call =registerService.getResult(phone_number,password);
+            RetrofitBuild retrofitBuild = new RetrofitBuild();
+            RetrofitService service = retrofitBuild.service();
+            retrofit2.Call<ApiResult> call =service.register(phone_number,password);
             call.enqueue(new Callback<ApiResult>() {
                 @Override
-                public void onResponse(retrofit2.Call<ApiResult> call, Response<ApiResult> response) {
-                    if (response.isSuccessful()){
+                public void onResponse(@NonNull retrofit2.Call<ApiResult> call, @NonNull Response<ApiResult> response) {
+                    if (response.isSuccessful() && response.body().isSuccessful()){
+                        PreferenceService.putString("configuration","configuration","login");
+                        PreferenceService.putString("phone","phone",ed_phone_num.getText().toString());
                         Log.v("msg",response.toString());
                         Toast.makeText(getApplicationContext(), "注册成功",
+                                Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterActivity.this,HomeActivity.class);
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(getApplicationContext(), response.body().getMsg(),
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
-                public void onFailure(retrofit2.Call<ApiResult> call, Throwable t) {
+                public void onFailure(@NonNull retrofit2.Call<ApiResult> call, @NonNull Throwable t) {
                     t.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "注册失败",
-                            Toast.LENGTH_SHORT).show();
                 }
             });
         }
