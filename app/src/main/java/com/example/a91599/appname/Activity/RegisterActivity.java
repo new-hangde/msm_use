@@ -2,6 +2,7 @@ package com.example.a91599.appname.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -69,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
             retrofit2.Call<ApiResult> call =service.register(phone_number,password);
             call.enqueue(new Callback<ApiResult>() {
                 @Override
-                public void onResponse(retrofit2.Call<ApiResult> call, Response<ApiResult> response) {
+                public void onResponse(@NonNull retrofit2.Call<ApiResult> call, @NonNull Response<ApiResult> response) {
                     if (response.isSuccessful() && response.body().isSuccessful()){
                         PreferenceService.putString("configuration","configuration","login");
                         PreferenceService.putString("phone","phone",ed_phone_num.getText().toString());
@@ -85,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(retrofit2.Call<ApiResult> call, Throwable t) {
+                public void onFailure(@NonNull retrofit2.Call<ApiResult> call, @NonNull Throwable t) {
                     t.printStackTrace();
                 }
             });

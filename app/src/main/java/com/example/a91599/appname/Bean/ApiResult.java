@@ -1,10 +1,6 @@
 package com.example.a91599.appname.Bean;
 
-import android.os.Message;
-
-import java.util.List;
-
- public class ApiResult<T> {
+public class ApiResult<T> {
     private int code;
     private String msg;
     private String time;

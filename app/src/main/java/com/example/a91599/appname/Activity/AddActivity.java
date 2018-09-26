@@ -43,8 +43,6 @@ public class AddActivity extends AppCompatActivity {
     private EditText ed_summary;
     private EditText ed_link;
     private EditText ed_title;
-    private Button bt_add;
-    private Button bt_upload;
     private final int REQUEST_SYSTEM_PIC = 10;
 
 
@@ -56,8 +54,8 @@ public class AddActivity extends AppCompatActivity {
         ed_link =(EditText)findViewById(R.id.ed_link);
         ed_summary =(EditText)findViewById(R.id.ed_summary);
         ed_title =(EditText)findViewById(R.id.ed_title);
-        bt_add = (Button)findViewById(R.id.bt_add);
-        bt_upload = (Button)findViewById(R.id.bt_upload);
+        Button bt_add = (Button) findViewById(R.id.bt_add);
+        Button bt_upload = (Button) findViewById(R.id.bt_upload);
         bt_upload.setOnClickListener(clickListener);
         bt_add.setOnClickListener(clickListener);
     }
@@ -165,7 +163,6 @@ public class AddActivity extends AppCompatActivity {
 
     private void displayImage(String imagePath) {
         if (imagePath != null) {
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             ed_image.setText(imagePath);
         } else {
             Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
@@ -189,7 +186,7 @@ public class AddActivity extends AppCompatActivity {
         retrofit2.Call<ApiResult> call =  service.upload(map,imageBodyPart);
         call.enqueue(new Callback<ApiResult>() {
             @Override
-            public void onResponse(retrofit2.Call<ApiResult> call, Response<ApiResult> response) {
+            public void onResponse(@NonNull retrofit2.Call<ApiResult> call, @NonNull Response<ApiResult> response) {
                 if (response.isSuccessful() && response.body().isSuccessful()){
                     Log.v("msg",response.toString());
                     ApiResult apiResult= (ApiResult) response.body();
@@ -208,7 +205,7 @@ public class AddActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(retrofit2.Call<ApiResult> call, Throwable t) {
+            public void onFailure(@NonNull retrofit2.Call<ApiResult> call, @NonNull Throwable t) {
                 Toast.makeText(AddActivity.this, "failed to upload", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
 
