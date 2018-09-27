@@ -1,12 +1,16 @@
 package com.example.a91599.appname.Activity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -77,8 +81,14 @@ public class RegisterActivity extends AppCompatActivity {
                         Log.v("msg",response.toString());
                         Toast.makeText(getApplicationContext(), "注册成功",
                                 Toast.LENGTH_SHORT).show();
+                        InputMethodManager imm =(InputMethodManager)getSystemService(
+                                Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(ed_pass_again.getWindowToken(), 0);
                         Intent intent = new Intent(RegisterActivity.this,HomeActivity.class);
-                        startActivity(intent);
+                        ComponentName cn = intent.getComponent();
+                        Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
+                        startActivity(mainIntent);
+                        finish();
                     }else {
                         Toast.makeText(getApplicationContext(), response.body().getMsg(),
                                 Toast.LENGTH_SHORT).show();

@@ -1,14 +1,18 @@
 package com.example.a91599.appname.Activity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -113,8 +117,13 @@ public class MainActivity extends AppCompatActivity {
                 if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                     PreferenceService.putString("configuration","configuration","login");
                     PreferenceService.putString("phone","phone",user.getText().toString());
+                    InputMethodManager imm =(InputMethodManager)getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(check.getWindowToken(), 0);
                     Intent intent = new Intent(MainActivity.this,HomeActivity.class);
-                    startActivity(intent);
+                    ComponentName cn = intent.getComponent();
+                    Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
+                    startActivity(mainIntent);
                     // 提交验证码成功,直接登录
                 } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                     new Thread(new Runnable() {
