@@ -1,83 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-        <EditText
-            android:maxLines="1"
-            android:id="@+id/user"
-            android:background="@drawable/corner_edit_view"
-            android:layout_width="match_parent"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_phone_text"
-            android:textSize="16sp" />
-        <LinearLayout
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <EditText
-                android:maxLines="1"
-                android:layout_gravity="center"
-                android:background="@drawable/corner_edit_view"
-                android:id="@+id/code"
-                android:layout_marginLeft="20dp"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_code_text"
-                android:textSize="16sp" />
-            <Button
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/check"
-                android:background="@drawable/corner_btn"
-                android:textColor="#FFFFFF"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/get_code"/>
-        </LinearLayout>
-    <Button
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:id="@+id/btn"
-        android:text="@string/checkAndLogin"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/corner_btn"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:textSize="16sp"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/user"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/corner_edit_view"
+        android:hint="@string/hint_phone_text"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textSize="16sp"/>
 
     <LinearLayout
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/corner_edit_view"
+            android:hint="@string/hint_code_text"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/check"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/corner_btn"
+            android:minHeight="0dp"
+            android:padding="8dp"
+            android:text="@string/get_code"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/corner_btn"
+        android:minHeight="0dp"
+        android:padding="8dp"
+        android:text="@string/checkAndLogin"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/tv_register"
-            android:textColor="@color/blue_btn_bg_color"
-            android:gravity="right"
-            android:layout_marginRight="10dp"
-            android:text="@string/register"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@string/register"
+            android:textColor="@color/main_blue_color"/>
 
         <TextView
             android:id="@+id/tv_pass_login"
-            android:textColor="@color/blue_btn_bg_color"
-            android:layout_marginLeft="10dp"
-            android:gravity="left"
-            android:layout_weight="1"
-            android:text="@string/pass_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="@string/pass_login"
+            android:textColor="@color/main_blue_color"/>
 
     </LinearLayout>
 
