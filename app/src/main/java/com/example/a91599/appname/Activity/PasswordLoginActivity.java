@@ -34,7 +34,7 @@ public class PasswordLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_login);
-        ed_phone_number = (EditText)findViewById(R.id.ed_phone_num_l);
+        ed_phone_number = (EditText)findViewById(R.id.account_input);
         ed_password = (EditText)findViewById(R.id.ed_pass_l);
         Button btn_login = (Button) findViewById(R.id.btn_login);
         if (phone.length()!=0)

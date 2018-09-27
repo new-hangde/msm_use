@@ -33,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         ed_pass =(EditText)findViewById(R.id.ed_pass);
         ed_pass_again = (EditText)findViewById(R.id.ed_pass_again);
-        ed_phone_num = (EditText)findViewById(R.id.ed_phone_num);
+        ed_phone_num = (EditText)findViewById(R.id.account_register);
         Button btn_register = (Button) findViewById(R.id.btn_register);
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override

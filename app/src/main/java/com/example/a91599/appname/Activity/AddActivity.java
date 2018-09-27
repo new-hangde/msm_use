@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.a91599.appname.Bean.ApiResult;
@@ -35,14 +36,16 @@ import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddActivity extends AppCompatActivity {
-    private EditText ed_image;
     private EditText ed_summary;
     private EditText ed_link;
     private EditText ed_title;
+    private ImageView upload;
+    private String path;
     private final int REQUEST_SYSTEM_PIC = 10;
 
 
@@ -50,13 +53,12 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        ed_image =(EditText)findViewById(R.id.ed_image);
+        upload = (ImageView)findViewById(R.id.bt_upload);
         ed_link =(EditText)findViewById(R.id.ed_link);
         ed_summary =(EditText)findViewById(R.id.ed_summary);
         ed_title =(EditText)findViewById(R.id.ed_title);
         Button bt_add = (Button) findViewById(R.id.bt_add);
-        Button bt_upload = (Button) findViewById(R.id.bt_upload);
-        bt_upload.setOnClickListener(clickListener);
+        upload.setOnClickListener(clickListener);
         bt_add.setOnClickListener(clickListener);
     }
 
@@ -163,53 +165,58 @@ public class AddActivity extends AppCompatActivity {
 
     private void displayImage(String imagePath) {
         if (imagePath != null) {
-            ed_image.setText(imagePath);
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+            path = imagePath;
+            upload.setImageBitmap(bitmap);
         } else {
             Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void upload(){
-        Map<String, RequestBody> map = new HashMap<>();
-        String title = ed_title.getText().toString();
-        String summary =ed_summary.getText().toString();
-        String link = ed_link.getText().toString();
-        map.put("title", RequestBody.create(null, String.valueOf(title)));
-        map.put("summary", RequestBody.create(null, String.valueOf(summary)));
-        map.put("link", RequestBody.create(null, String.valueOf(link)));
-        String path = ed_image.getText().toString();
-        File file = new File(path);
-        RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part imageBodyPart = MultipartBody.Part.createFormData("image", file.getName(), imageBody);
-        RetrofitBuild retrofitBuild = new RetrofitBuild();
-        RetrofitService service = retrofitBuild.service();
-        retrofit2.Call<ApiResult> call =  service.upload(map,imageBodyPart);
-        call.enqueue(new Callback<ApiResult>() {
-            @Override
-            public void onResponse(@NonNull retrofit2.Call<ApiResult> call, @NonNull Response<ApiResult> response) {
-                if (response.isSuccessful() && response.body().isSuccessful()){
-                    Log.v("msg",response.toString());
-                    ApiResult apiResult= (ApiResult) response.body();
-                    if (apiResult==null){
-                        Toast.makeText(AddActivity.this, "内容为空", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Log.v(" ApiResult",apiResult.toString());
-                        Log.v(" title",ed_title.getText().toString());
-                        Log.v(" summary",ed_summary.getText().toString());
-                        Log.v(" link",ed_link.getText().toString());
+        if (path!=null&&ed_link.getText().length()!=0&&ed_summary.getText().length()!=0&&ed_title.getText().length()!=0){
+            Map<String, RequestBody> map = new HashMap<>();
+            String title = ed_title.getText().toString();
+            String summary =ed_summary.getText().toString();
+            String link = ed_link.getText().toString();
+            map.put("title", RequestBody.create(null, String.valueOf(title)));
+            map.put("summary", RequestBody.create(null, String.valueOf(summary)));
+            map.put("link", RequestBody.create(null, String.valueOf(link)));
+            File file = new File(path);
+            RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part imageBodyPart = MultipartBody.Part.createFormData("image", file.getName(), imageBody);
+            RetrofitBuild retrofitBuild = new RetrofitBuild();
+            RetrofitService service = retrofitBuild.service();
+            Call<ApiResult> call =  service.upload(map,imageBodyPart);
+            call.enqueue(new Callback<ApiResult>() {
+                @Override
+                public void onResponse(@NonNull retrofit2.Call<ApiResult> call, @NonNull Response<ApiResult> response) {
+                    if (response.isSuccessful() && response.body().isSuccessful()){
+                        Log.v("msg",response.toString());
+                        ApiResult apiResult= (ApiResult) response.body();
+                        if (apiResult==null){
+                            Toast.makeText(AddActivity.this, "内容为空", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Log.v(" ApiResult",apiResult.toString());
+                            Log.v(" title",ed_title.getText().toString());
+                            Log.v(" summary",ed_summary.getText().toString());
+                            Log.v(" link",ed_link.getText().toString());
+                        }
+
+                        Toast.makeText(AddActivity.this, "success to upload", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(AddActivity.this,HomeActivity.class);
+                        startActivity(intent);
                     }
-
-                    Toast.makeText(AddActivity.this, "success to upload", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(AddActivity.this,HomeActivity.class);
-                    startActivity(intent);
                 }
-            }
-            @Override
-            public void onFailure(@NonNull retrofit2.Call<ApiResult> call, @NonNull Throwable t) {
-                Toast.makeText(AddActivity.this, "failed to upload", Toast.LENGTH_SHORT).show();
-                t.printStackTrace();
+                @Override
+                public void onFailure(@NonNull retrofit2.Call<ApiResult> call, @NonNull Throwable t) {
+                    Toast.makeText(AddActivity.this, "failed to upload", Toast.LENGTH_SHORT).show();
+                    t.printStackTrace();
 
-            }
-        });
+                }
+            });
+        }else {
+            Toast.makeText(AddActivity.this, "请把信息填写完整", Toast.LENGTH_SHORT).show();
+        }
     }
 }

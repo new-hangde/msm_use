@@ -1,108 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp"
-    tools:context="com.example.a91599.appname.Activity.AddActivity">
+android:orientation="vertical"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:padding="20dp"
+tools:context="com.example.a91599.appname.Activity.AddActivity">
+
     <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:textSize="@dimen/register_size"
-            android:layout_gravity="center"
-            android:layout_width="70dp"
-            android:gravity="right"
-            android:layout_marginRight="10dp"
-            android:layout_height="wrap_content"
-            android:text="@string/company_image" />
-        <EditText
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:id="@+id/ed_image"
-            android:background="@drawable/corner_edit_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <Button
-            android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
             android:id="@+id/bt_upload"
             android:layout_weight="0"
+            android:background="@drawable/add_frame"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/add" />
+
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:layout_gravity="center"
+            android:textSize="@dimen/small_size"
+            android:textColor="@color/silver"
+            android:text="@string/company_image"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/blue_btn_bg_color"
-            android:text="@string/upload"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:textSize="@dimen/register_size"
-            android:layout_marginRight="10dp"
-            android:gravity="right"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:text="@string/title" />
-        <EditText
-            android:id="@+id/ed_title"
-            android:background="@drawable/corner_edit_view"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:textSize="@dimen/register_size"
-            android:layout_marginRight="10dp"
-            android:gravity="right"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:text="@string/summary" />
 
-        <EditText
-            android:id="@+id/ed_summary"
-            android:background="@drawable/corner_edit_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal"
+    <EditText
+        android:id="@+id/ed_title"
+        android:layout_marginTop="20dp"
+        android:hint="@string/title"
+        android:padding="8dp"
+        android:minHeight="0dp"
+        android:maxLines="1"
+        android:lines="1"
+        android:textSize="@dimen/normal_size"
+        android:background="@drawable/corner_edit_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:textSize="@dimen/register_size"
-            android:layout_marginRight="10dp"
-            android:gravity="right"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:text="@string/link" />
-        <EditText
-            android:id="@+id/ed_link"
-            android:background="@drawable/corner_edit_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_height="wrap_content" />
+
+
+
+    <EditText
+        android:id="@+id/ed_summary"
+        android:layout_marginTop="20dp"
+        android:hint="@string/summary"
+        android:padding="8dp"
+        android:minHeight="0dp"
+        android:textSize="@dimen/normal_size"
+        android:background="@drawable/corner_edit_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+<EditText
+    android:id="@+id/ed_link"
+    android:layout_marginTop="20dp"
+    android:hint="@string/link"
+    android:padding="8dp"
+    android:minHeight="0dp"
+    android:textSize="@dimen/normal_size"
+    android:background="@drawable/corner_edit_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
 
     <Button
+        android:layout_marginTop="20dp"
         android:textColor="#ffffff"
-        android:background="@color/blue_btn_bg_color"
+        android:background="@drawable/corner_btn"
         android:layout_gravity="center"
         android:id="@+id/bt_add"
-        android:layout_width="wrap_content"
+        android:textSize="@dimen/normal_size"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add"/>
 
