@@ -1,6 +1,5 @@
 package com.example.a91599.appname.Activity;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.example.a91599.appname.Bean.ApiResult;
 import com.example.a91599.appname.Bean.User;
 import com.example.a91599.appname.R;
-import com.example.a91599.appname.Service.ActivityUtils;
 import com.example.a91599.appname.Service.PreferenceService;
 import com.example.a91599.appname.Service.RetrofitBuild;
 import com.example.a91599.appname.Service.RetrofitService;
@@ -33,6 +32,7 @@ public class PasswordLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PreferenceService.init(this);
         setContentView(R.layout.activity_password_login);
         ed_phone_number = (EditText)findViewById(R.id.account_input);
         ed_password = (EditText)findViewById(R.id.ed_pass_l);
@@ -65,6 +65,9 @@ public class PasswordLoginActivity extends AppCompatActivity {
                 if(response.isSuccessful() && response.body().isSuccessful()){
                     PreferenceService.putString("configuration","configuration","login");
                     PreferenceService.putString("phone","phone",ed_phone_number.getText().toString());
+                    String  token = response.body().getData().getToken();
+                    PreferenceService .putString("token","token",token);
+                    Log.v("token",token);
                     InputMethodManager imm =(InputMethodManager)getSystemService(
                             Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(ed_password.getWindowToken(), 0);

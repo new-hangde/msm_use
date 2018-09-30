@@ -61,6 +61,7 @@ public class PersonFragment extends Fragment {
                     Log.v("configuration",configuration);
                     if(configuration.equals("login")){
                         PreferenceService.putString("configuration","configuration","exit");
+                        PreferenceService.putString("token","token","");
                         TextSet();
                     }else if (configuration.equals("exit")){
                         startActivity(new Intent(getContext(), MainActivity.class));

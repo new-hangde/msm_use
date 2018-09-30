@@ -31,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        PreferenceService.init(this);
         ed_pass =(EditText)findViewById(R.id.ed_pass);
         ed_pass_again = (EditText)findViewById(R.id.ed_pass_again);
         ed_phone_num = (EditText)findViewById(R.id.account_register);

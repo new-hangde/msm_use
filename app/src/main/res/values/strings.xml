@@ -33,6 +33,8 @@
     <string name="register">账号注册</string>
     <string name="pass_login">密码登录</string>
     <string name="exit">退出登录</string>
+    <string name="collect">收藏</string>
+    <string name="collected">已收藏</string>
 
 
 </resources>

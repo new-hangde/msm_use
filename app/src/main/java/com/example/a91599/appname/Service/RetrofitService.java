@@ -41,4 +41,8 @@ public interface RetrofitService {
     Call<ApiResult>  upload(@PartMap Map<String, RequestBody> map,
                             @Part MultipartBody.Part image);
 
+    @GET("/api/job/addFavorite")
+    Call<ApiResult> collect(@Query("token") String token,
+                   @Query("job_id")int job_id);
+
 }

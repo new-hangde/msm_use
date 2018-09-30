@@ -3,10 +3,12 @@ package com.example.a91599.appname.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.a91599.appname.R;
+import com.example.a91599.appname.Service.PreferenceService;
 import com.example.a91599.appname.fragment.MainFragment;
 import com.example.a91599.appname.fragment.PersonFragment;
 

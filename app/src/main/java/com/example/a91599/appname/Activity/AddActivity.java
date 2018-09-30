@@ -8,11 +8,13 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -167,6 +169,7 @@ public class AddActivity extends AppCompatActivity {
         if (imagePath != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             path = imagePath;
+            upload.setBackgroundResource(0);
             upload.setImageBitmap(bitmap);
         } else {
             Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
@@ -182,6 +185,7 @@ public class AddActivity extends AppCompatActivity {
             map.put("title", RequestBody.create(null, String.valueOf(title)));
             map.put("summary", RequestBody.create(null, String.valueOf(summary)));
             map.put("link", RequestBody.create(null, String.valueOf(link)));
+            Log.v("path",path);
             File file = new File(path);
             RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             MultipartBody.Part imageBodyPart = MultipartBody.Part.createFormData("image", file.getName(), imageBody);
@@ -203,9 +207,11 @@ public class AddActivity extends AppCompatActivity {
                             Log.v(" link",ed_link.getText().toString());
                         }
 
-                        Toast.makeText(AddActivity.this, "success to upload", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "success to upload", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(AddActivity.this,HomeActivity.class);
                         startActivity(intent);
+                    }else {
+                        Toast.makeText(getApplicationContext(),response.body().getMsg(), Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
