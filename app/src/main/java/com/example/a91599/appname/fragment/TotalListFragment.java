@@ -65,11 +65,15 @@ public class TotalListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NewsBean newsBean = (NewsBean) parent.getItemAtPosition(position);
-                DBDao dbDao =new DBDao(getContext());
-                dbDao.insert(newsBean);
-                Intent intent = new Intent(getContext(), ShowActivity.class);
-                intent.putExtra("link",newsBean.getLink());
-                startActivity(intent);
+                if (newsBean.getLink()==null){
+                    Toast.makeText(getContext(),"该链接为空",Toast.LENGTH_SHORT).show();
+                }else {
+                    DBDao dbDao =new DBDao(getContext());
+                    dbDao.insert(newsBean);
+                    Intent intent = new Intent(getContext(), ShowActivity.class);
+                    intent.putExtra("link",newsBean.getLink());
+                    startActivity(intent);
+                }
             }
         });
         return rootView;
@@ -92,6 +96,7 @@ public class TotalListFragment extends Fragment {
                         }
                         for(int i=0;i<list.size();i++){
                             NewsBean newsBean = list.get(i);
+                            Log.v("Company_image",newsBean.getCompany_image());
                             adapter.addItem(newsBean);
                         }
                         if (list.size()<pageSize){

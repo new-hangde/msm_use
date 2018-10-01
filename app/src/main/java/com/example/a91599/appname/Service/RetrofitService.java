@@ -2,6 +2,7 @@ package com.example.a91599.appname.Service;
 
 
 import com.example.a91599.appname.Bean.ApiResult;
+import com.example.a91599.appname.Bean.Collect;
 import com.example.a91599.appname.Bean.NewsBean;
 import com.example.a91599.appname.Bean.User;
 
@@ -44,5 +45,16 @@ public interface RetrofitService {
     @GET("/api/job/addFavorite")
     Call<ApiResult> collect(@Query("token") String token,
                    @Query("job_id")int job_id);
+
+    @GET("/api/job/isFavorite")
+    Call<ApiResult> isCollected(@Query("token") String token,
+                            @Query("job_id")int job_id);
+
+    @GET("/api/job/removeFavorite")
+    Call<ApiResult> cancelCollect(@Query("token") String token,
+                            @Query("job_id")int job_id);
+
+    @GET("/api/job/favorite")
+    Call<ApiResult<List<Collect<NewsBean>>>> getCollected(@Query("token") String token);
 
 }

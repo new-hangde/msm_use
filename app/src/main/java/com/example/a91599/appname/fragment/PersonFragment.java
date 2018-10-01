@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.a91599.appname.Activity.AddActivity;
+import com.example.a91599.appname.Activity.CollectingActivity;
 import com.example.a91599.appname.Activity.HistoryActivity;
 import com.example.a91599.appname.Activity.MainActivity;
 import com.example.a91599.appname.R;
@@ -46,6 +47,8 @@ public class PersonFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.follow:
+                    Intent intent3 = new Intent(getContext(),CollectingActivity.class);
+                    startActivity(intent3);
                     break;
                 case R.id.setting:
                     break;

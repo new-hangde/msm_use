@@ -7,10 +7,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <EditText
-            android:layout_margin="10dp"
             android:id="@+id/ed_search"
+            android:layout_margin="10dp"
             android:hint="@string/title_search"
             android:layout_weight="2"
+            android:lines="1"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:minHeight="0dp"
+            android:inputType="text"
+            android:textSize="@dimen/normal_size"
             android:background="@drawable/corner_edit_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -23,8 +29,8 @@
             android:background="@drawable/search"
             android:id="@+id/ib_search"
             android:gravity="center"
-            android:layout_width="100dp"
-            android:layout_height="match_parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout

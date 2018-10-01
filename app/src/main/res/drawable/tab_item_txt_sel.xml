@@ -6,7 +6,7 @@
     <item android:state_focused="false" android:state_pressed="false" android:state_selected="true" android:color="@color/blue_btn_bg_color"/>
 
     <!-- Focused states -->
-    <item android:state_focused="true" android:state_pressed="false" android:state_selected="false" android:color="@color/blue_btn_bg_color"/>
+    <item android:state_focused="true" android:state_pressed="false" android:state_selected="false" android:text="@color/blue_btn_bg_color"/>
     <item android:state_focused="true" android:state_pressed="false" android:state_selected="true" android:color="@color/blue_btn_bg_color"/>
 
     <!-- Pressed -->

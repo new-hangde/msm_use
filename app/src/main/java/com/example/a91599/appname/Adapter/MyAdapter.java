@@ -2,7 +2,6 @@ package com.example.a91599.appname.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -57,7 +56,7 @@ public class MyAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final Hand hand;
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.item, null);
+            convertView = View.inflate(context, R.layout.item_total, null);
             hand = new Hand();
             hand.title =(TextView)convertView.findViewById(R.id.title);
             hand.time = (TextView)convertView.findViewById(R.id.time);
@@ -83,25 +82,62 @@ public class MyAdapter extends BaseAdapter {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String dateStr = sdf.format(calendar.getTime());
         hand.time.setText(dateStr);
+        final int jib_id = list.get(position).getId();
+        RetrofitBuild retrofitBuild= new RetrofitBuild();
+        RetrofitService service = retrofitBuild.service();
+        Call<ApiResult> call_query = service.isCollected(token,jib_id);
+        call_query.enqueue(new Callback<ApiResult>() {
+            @Override
+            public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+                if(response.isSuccessful()&&response.body().isSuccessful()){
+                    hand.collect.setSelected(true);
+                    hand.collect.setText("已收藏");
+                }else {
+                    hand.collect.setSelected(false);
+                    hand.collect.setText("收藏");
+                }
+            }
+            @Override
+            public void onFailure(Call<ApiResult> call, Throwable t) {
+                    t.printStackTrace();
+            }
+        });
         hand.collect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hand.collect.isSelected()){
-                    hand.collect.setSelected(false);
-                    hand.collect.setText("收藏");
+                    RetrofitBuild retrofitBuild= new RetrofitBuild();
+                    RetrofitService service = retrofitBuild.service();
+                    Call<ApiResult>call_cancel = service.cancelCollect(token,jib_id);
+                    call_cancel.enqueue(new Callback<ApiResult>() {
+                        @Override
+                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+                            if(response.isSuccessful()&&response.body().isSuccessful()){
+                                Toast.makeText(context,response.body().getMsg(),Toast.LENGTH_SHORT).show();
+                                hand.collect.setSelected(false);
+                                hand.collect.setText("收藏");
+                            }else {
+                                Toast.makeText(context,response.body().getMsg(),Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<ApiResult> call, Throwable t) {
+                                t.printStackTrace();
+                        }
+                    });
                 }else {
                     RetrofitBuild retrofitBuild= new RetrofitBuild();
                     RetrofitService retrofitService = retrofitBuild.service();
-                   Call<ApiResult> call = retrofitService.collect(token,list.get(position).getId());
-                    call.enqueue(new Callback<ApiResult>() {
+                   Call<ApiResult> call_add = retrofitService.collect(token,jib_id);
+                    call_add.enqueue(new Callback<ApiResult>() {
                         @Override
                         public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
                             if(response.isSuccessful()&&response.body().isSuccessful()){
                                 hand.collect.setSelected(true);
                                 hand.collect.setText("已收藏");
-                                Toast.makeText(context,"收藏成功！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context,response.body().getMsg(),Toast.LENGTH_SHORT).show();
                             }else {
-                                Toast.makeText(context,"收藏失败！",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context,response.body().getMsg(),Toast.LENGTH_SHORT).show();
                             }
                         }
                         @Override

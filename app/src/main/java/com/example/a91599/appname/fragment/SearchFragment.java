@@ -3,6 +3,7 @@ package com.example.a91599.appname.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.a91599.appname.Activity.ShowActivity;
-import com.example.a91599.appname.Adapter.MyAdapter;
+import com.example.a91599.appname.Adapter.MySearchAdapter;
 import com.example.a91599.appname.Bean.ApiResult;
 import com.example.a91599.appname.Bean.NewsBean;
 import com.example.a91599.appname.DBHelper.DBDao;
@@ -34,7 +35,7 @@ import retrofit2.Response;
 
 
 public class SearchFragment extends Fragment implements View.OnClickListener {
-    private MyAdapter adapter = null;
+    private MySearchAdapter adapter = null;
     private ListView listView;
     private EditText ed_search;
     public ImageButton ib_search;
@@ -47,7 +48,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         listView =(ListView)rootView.findViewById(R.id.list_search);
         ed_search =(EditText)rootView.findViewById(R.id.ed_search);
         ib_search =(ImageButton)rootView.findViewById(R.id.ib_search);
-        adapter = new MyAdapter(getContext(),new ArrayList<NewsBean>());
+        adapter = new MySearchAdapter(getContext(),new ArrayList<NewsBean>());
         ib_search.setOnClickListener(this);
         mRefreshLayout = (RefreshLayout)rootView.findViewById(R.id.refreshLayout_search);
         mRefreshLayout.setEnableRefresh(false);
@@ -70,12 +71,16 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                NewsBean newsBean =(NewsBean)parent.getItemAtPosition(position);
-                DBDao dbDao =new DBDao(getContext());
-                dbDao.insert(newsBean);
-                Intent intent = new Intent(getContext(), ShowActivity.class);
-                intent.putExtra("link",newsBean.getLink());
-                startActivity(intent);
+                NewsBean newsBean = (NewsBean) parent.getItemAtPosition(position);
+                if (newsBean.getLink()==null){
+                    Toast.makeText(getContext(),"该链接为空",Toast.LENGTH_SHORT).show();
+                }else {
+                    DBDao dbDao =new DBDao(getContext());
+                    dbDao.insert(newsBean);
+                    Intent intent = new Intent(getContext(), ShowActivity.class);
+                    intent.putExtra("link",newsBean.getLink());
+                    startActivity(intent);
+                }
             }
         });
         return rootView;
@@ -126,12 +131,16 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+
         mRefreshLayout.setEnableLoadmore(true);
         adapter.clear();
         pageIndex=1;
         String title = ed_search.getText().toString();
-        if (!title.equals("")){
+        if (!TextUtils.isEmpty(ed_search.getText().toString())){
             searchListShow(pageIndex,title);
+        }else {
+            Toast.makeText(getContext(),"内容不能为空！",Toast.LENGTH_SHORT).show();
+            adapter.notifyDataSetChanged();
         }
     }
 }

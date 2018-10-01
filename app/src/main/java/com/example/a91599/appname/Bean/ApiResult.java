@@ -1,9 +1,12 @@
 package com.example.a91599.appname.Bean;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ApiResult<T> {
     private int code;
     private String msg;
     private String time;
+    @SerializedName(value = "data", alternate = {"job"})
     private T data;
 
     public int getCode() {

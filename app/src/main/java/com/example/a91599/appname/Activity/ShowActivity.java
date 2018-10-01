@@ -29,7 +29,10 @@ public class ShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show);
         progressBar= (ProgressBar)findViewById(R.id.progressbar);//进度条
         webView = (WebView) findViewById(R.id.web_view);
-        uri="https://"+getIntent().getStringExtra("link");
+        uri = getIntent().getStringExtra("link");
+        if (!uri.startsWith("http://")){
+            uri="https://"+getIntent().getStringExtra("link");
+        }
         webView.loadUrl(uri);
         webView.addJavascriptInterface(this,"android");//添加js监听 这样html就能调用客户端
         webView.setWebChromeClient(webChromeClient);
